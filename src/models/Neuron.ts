@@ -33,7 +33,11 @@ export class Neuron {
 
     private weighting(state: State) {        
         const output = state.entry_one * state.weight_one + state.entry_two * state.weight_two + this.entry_bias * (this.weight_bias ? this.weight_bias : 1);
-        const classification = output >= this.threshold;
+        const classification = output >= this.threshold ? 1 : 0;
+
+        if(classification !== state.expected_class) {
+            state.error = state.expected_class - output;
+        } else state.error = 0;
 
         state.output = output;
         state.classification = classification;

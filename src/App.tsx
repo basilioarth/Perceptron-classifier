@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Neuron from './components/neuron';
+import NeuronComponent from './components/neuron';
 import { State } from './models/State';
 
 const App = () => {
@@ -18,7 +18,8 @@ const App = () => {
     <div>
       {
         isNeuronReady ? 
-        <Neuron
+        <NeuronComponent
+          states = {states}
           entryBias = {entryBias}
           weightBias = {weightBias}
           threshold = {threshold}

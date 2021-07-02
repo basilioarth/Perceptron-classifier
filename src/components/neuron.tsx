@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { State } from '../models/State';
+import { Neuron } from '../models/Neuron';
 
-export default function Neuron({ entry_one, weight_one, entry_two, weight_two, entry_bias, weight_bias, threshold, learning_rate, expected_class }: State | any) {
+interface Props {
+    states: State[];
+    entryBias: number;
+    weightBias: number;
+    threshold: number;
+    learningRate: number;
+}
 
-    useEffect(() => {
-       
-    })
+export default function NeuronComponent({ states, entryBias, weightBias, threshold, learningRate }: Props) {
+
+    const [neuron] = useState<Neuron>(() => new Neuron(states, entryBias, weightBias, threshold, learningRate));
 
     return (
         <div className="Neuron">
