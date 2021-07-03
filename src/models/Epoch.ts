@@ -8,6 +8,7 @@ export class Epoch {
     }
     
     public getStates(): State[] {
+        console.log(this.states);
         return this.states;
     }
 
