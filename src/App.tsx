@@ -7,12 +7,12 @@ const App = () => {
     const [isNeuronReady, setIsNeuronReady] = useState<boolean>(false);
 
     const [states, setStates] = useState<State[]>([]);
-    const [entryBias, setEntryBias] = useState<number>(0);
+    const [entryBias, setEntryBias] = useState<number>(1);
 
-    const [weightBias, setWeightBias] = useState<number>(1);
+    const [weightBias, setWeightBias] = useState<number>(-0.5);
 
     const [threshold, setThreshold] = useState<number>(0);
-    const [learningRate, setLearningRate] = useState<number>(1);
+    const [learningRate, setLearningRate] = useState<number>(0.5);
 
     const [weightOne, setWeightOne] = useState<number>(3);
     const [weightTwo, setWeightTwo] = useState<number>(2);
@@ -36,10 +36,10 @@ const App = () => {
     })
 
     const treinar = () => {
-      states.push({entry_one: entries.entry1, entry_two: entries.entry2, expected_class: classes.classe1});;
-      states.push({entry_one: entries.entry3, entry_two: entries.entry4, expected_class: classes.classe2});;
-      states.push({entry_one: entries.entry5, entry_two: entries.entry6, expected_class: classes.classe3});;
-      states.push({entry_one: entries.entry7, entry_two: entries.entry8, expected_class: classes.classe4});;
+      states.push({entry_one: entries.entry1, entry_two: entries.entry2, expected_class: classes.classe1});
+      states.push({entry_one: entries.entry3, entry_two: entries.entry4, expected_class: classes.classe2});
+      states.push({entry_one: entries.entry5, entry_two: entries.entry6, expected_class: classes.classe3});
+      states.push({entry_one: entries.entry7, entry_two: entries.entry8, expected_class: classes.classe4});
       setIsNeuronReady(true);
     }
 
