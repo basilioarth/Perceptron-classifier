@@ -4,147 +4,189 @@ import { State } from './models/State';
 
 const App = () => {
 
-    const [isNeuronReady, setIsNeuronReady] = useState<boolean>(false);
+  const [isNeuronReady, setIsNeuronReady] = useState<boolean>(false);
 
-    const [states, setStates] = useState<State[]>([]);
-    const [entryBias, setEntryBias] = useState<number>(1);
+  const [states, setStates] = useState<State[]>([]);
+  const [entryBias, setEntryBias] = useState("1");
 
-    const [weightBias, setWeightBias] = useState<number>(-0.5);
+  const [weightBias, setWeightBias] = useState("0");
 
-    const [threshold, setThreshold] = useState<number>(0);
-    const [learningRate, setLearningRate] = useState<number>(0.5);
+  const [threshold, setThreshold] = useState("0");
+  const [learningRate, setLearningRate] = useState("0.5");
 
-    const [weightOne, setWeightOne] = useState<number>(3);
-    const [weightTwo, setWeightTwo] = useState<number>(2);
+  const [weightOne, setWeightOne] = useState("3");
+  const [weightTwo, setWeightTwo] = useState("2");
 
-    const [entries, setEntries] = useState({
-      entry1: 0,
-      entry2: 0,
-      entry3: 0,
-      entry4: 1,
-      entry5: 1,
-      entry6: 0,
-      entry7: 1,
-      entry8: 1
-    })
+  const [entries, setEntries] = useState({
+    entryOne: "0",
+    entryTwo: "0",
+    entryThree: "0",
+    entryFour: "1",
+    entryFive: "1",
+    entrySix: "0",
+    entrySeven: "1",
+    entryEight: "1"
+  })
 
-    const [classes, setClasses] = useState({
-      classe1: 0,
-      classe2: 0,
-      classe3: 1,
-      classe4: 1,
-    })
+  const [classes, setClasses] = useState({
+    expectedClassOne: "0",
+    expectedClassTwo: "0",
+    expectedClassThree: "1",
+    expectedClassFour: "1",
+  })
 
-    const treinar = () => {
-      states.push({entry_one: entries.entry1, entry_two: entries.entry2, expected_class: classes.classe1});
-      states.push({entry_one: entries.entry3, entry_two: entries.entry4, expected_class: classes.classe2});
-      states.push({entry_one: entries.entry5, entry_two: entries.entry6, expected_class: classes.classe3});
-      states.push({entry_one: entries.entry7, entry_two: entries.entry8, expected_class: classes.classe4});
-      setIsNeuronReady(true);
-    }
+  const treinar = () => {
+    setStates([
+      { 
+        entry_one: Number(entries.entryOne), 
+        entry_two: Number(entries.entryTwo), 
+        expected_class: Number(classes.expectedClassOne) 
+      },
+      {
+        entry_one: Number(entries.entryTwo), 
+        entry_two: Number(entries.entryFour), 
+        expected_class: Number(classes.expectedClassTwo)
+      },
+      {
+        entry_one: Number(entries.entryFive), 
+        entry_two: Number(entries.entrySix), 
+        expected_class: Number(classes.expectedClassThree)
+      },
+      {
+        entry_one: Number(entries.entrySeven), 
+        entry_two: Number(entries.entryEight), 
+        expected_class: Number(classes.expectedClassFour)
+      }
+    ]);
+
+    setIsNeuronReady(true);
+  }
 
   return (
-    <div>
-
-      <form>
-        <div>
-          <label htmlFor="">Entrada 1</label>
-          <input type="text" value={entries.entry1} onChange={(e) => setEntries({...entries, entry1: Number(e.target.value)})} />
+    <div className="container">
+      <div className="card mt-3">
+        <div className="card-header">
+          Featured
         </div>
-        <div>
-          <label htmlFor="">Entrada 2</label>
-          <input type="text" value={entries.entry2} onChange={(e) => setEntries({...entries, entry2: Number(e.target.value)})} />
+        <div className="card-body">
+          <div className="row">
+            <div className="col-3">
+              <h4>Primeira entrada</h4>
+              <div className="row">
+                <div className="mb-3 col-3">
+                  <label className="form-label">x1</label>
+                  <input type="text" pattern="[+-]?([0-9]*[.])?[0-9]+" value={entries.entryOne} onChange={(e) => setEntries({ ...entries, entryOne: e.target.value })} className="form-control" />
+                </div>
+                <div className="mb-3 col-3">
+                  <label className="form-label">x2</label>
+                  <input type="text" value={entries.entryTwo} onChange={(e) => setEntries({ ...entries, entryTwo: e.target.value })} className="form-control" />
+                </div>
+              </div>
+              <div className="mb-3 col-5">
+                <label className="form-label">Classe esperada</label>
+                <input type="text" value={classes.expectedClassOne} onChange={(e) => setClasses({ ...classes, expectedClassOne: e.target.value })} className="form-control" />
+              </div>
+            </div>
+            <div className="col-3">
+              <h4>Segunda entrada</h4>
+              <div className="row">
+                <div className="mb-3 col-3">
+                  <label className="form-label">x1</label>
+                  <input type="text" value={entries.entryThree} onChange={(e) => setEntries({ ...entries, entryThree: e.target.value })} className="form-control" />
+                </div>
+                <div className="mb-3 col-3">
+                  <label className="form-label">x2</label>
+                  <input type="text" value={entries.entryFour} onChange={(e) => setEntries({ ...entries, entryFour: e.target.value })} className="form-control" />
+                </div>
+              </div>
+              <div className="mb-3 col-5">
+                <label className="form-label">Classe esperada</label>
+                <input type="text" value={classes.expectedClassTwo} onChange={(e) => setClasses({ ...classes, expectedClassTwo: e.target.value })} className="form-control" />
+              </div>
+            </div>
+            <div className="col-3">
+              <h4>Terceiro entrada</h4>
+              <div className="row">
+                <div className="mb-3 col-3">
+                  <label className="form-label">x1</label>
+                  <input type="text" value={entries.entryFive} onChange={(e) => setEntries({ ...entries, entryFive: e.target.value })} className="form-control" />
+                </div>
+                <div className="mb-3 col-3">
+                  <label className="form-label">x2</label>
+                  <input type="text" value={entries.entrySix} onChange={(e) => setEntries({ ...entries, entrySix: e.target.value })} className="form-control" />
+                </div>
+              </div>
+              <div className="mb-3 col-5">
+                <label className="form-label">Classe esperada</label>
+                <input type="text" value={classes.expectedClassThree} onChange={(e) => setClasses({ ...classes, expectedClassThree: e.target.value })} className="form-control" />
+              </div>
+            </div>
+            <div className="col-3">
+              <h4>Quarta entrada</h4>
+              <div className="row">
+                <div className="mb-3 col-3">
+                  <label className="form-label">x1</label>
+                  <input type="text" value={entries.entrySeven} onChange={(e) => setEntries({ ...entries, entrySeven: e.target.value })} className="form-control" />
+                </div>
+                <div className="mb-3 col-3">
+                  <label className="form-label">x2</label>
+                  <input type="text" value={entries.entryEight} onChange={(e) => setEntries({ ...entries, entryEight: e.target.value })} className="form-control" />
+                </div>
+              </div>
+              <div className="mb-3 col-5">
+                <label className="form-label">Classe esperada</label>
+                <input type="text" value={classes.expectedClassFour} onChange={(e) => setClasses({ ...classes, expectedClassFour: e.target.value })} className="form-control" />
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div className="row">
+            <h4>Pesos</h4>
+            <div className="mb-3 col-2">
+              <label className="form-label">w1</label>
+              <input type="text" value={weightOne} onChange={(e) => setWeightOne(e.target.value)} className="form-control" />
+            </div>
+            <div className="mb-3 col-2">
+              <label className="form-label">w2</label>
+              <input type="text" value={weightTwo} onChange={(e) => setWeightTwo(e.target.value)} className="form-control" />
+            </div>
+            <div className="mb-3 col-2">
+              <label className="form-label">Bias</label>
+              <input type="text" value={weightBias} onChange={(e) => setWeightBias(e.target.value)} className="form-control" />
+            </div>
+          </div>
+          <hr />
+          <div className="row">
+            <h4>Parâmetros</h4>
+            <div className="mb-3 col-2">
+              <label className="form-label">Limite</label>
+              <input type="text" value={threshold} onChange={(e) => setThreshold(e.target.value)} className="form-control" />
+            </div>
+            <div className="mb-3 col-2">
+              <label className="form-label">Taxa de aprendizado</label>
+              <input type="text" value={learningRate} onChange={(e) => setLearningRate(e.target.value)} className="form-control" />
+            </div>
+          </div>
+          <div className="col-12 text-center mt-4">
+            <button className="btn btn-primary" onClick={treinar} type="button">Treinar</button>
+          </div>
         </div>
-       
-        <div>
-          <label htmlFor="">Classe esperada 1</label>
-          <input type="text" value={classes.classe1} onChange={(e) => setClasses({...classes, classe1: Number(e.target.value)})} />
-        </div>
-        <div>
-          <label htmlFor="">Entrada 3</label>
-          <input type="text" value={entries.entry3} onChange={(e) => setEntries({...entries, entry3: Number(e.target.value)})} />
-        </div>
-       
-        <div>
-          <label htmlFor="">Entrada 4</label>
-          <input type="text" value={entries.entry4} onChange={(e) => setEntries({...entries, entry4: Number(e.target.value)})} />
-        </div>
-       
-        <div>
-          <label htmlFor="">Classe esperada 2</label>
-          <input type="text" value={classes.classe2} onChange={(e) => setClasses({...classes, classe2: Number(e.target.value)})} />
-        </div>
-        <div>
-          <label htmlFor="">Entrada 5</label>
-          <input type="text" value={entries.entry5} onChange={(e) => setEntries({...entries, entry5: Number(e.target.value)})} />
-        </div>
-        
-        <div>
-          <label htmlFor="">Entrada 6</label>
-          <input type="text" value={entries.entry6} onChange={(e) => setEntries({...entries, entry6: Number(e.target.value)})} />
-        </div>
-       
-        <div>
-          <label htmlFor="">Classe esperada 3</label>
-          <input type="text" value={classes.classe3} onChange={(e) => setClasses({...classes, classe3: Number(e.target.value)})} />
-        </div>
-        <div>
-          <label htmlFor="">Entrada 7</label>
-          <input type="text" value={entries.entry7} onChange={(e) => setEntries({...entries, entry7: Number(e.target.value)})} />
-        </div>
-        
-        <div>
-          <label htmlFor="">Entrada 8</label>
-          <input type="text" value={entries.entry8} onChange={(e) => setEntries({...entries, entry8: Number(e.target.value)})} />
-        </div>
-        <div>
-          <label htmlFor="">Peso 1</label>
-          <input type="text" value={weightOne} onChange={(e) => setWeightOne(Number(e.target.value))} />
-        </div>
-        <div>
-          <label htmlFor="">Peso 2</label>
-          <input type="text" value={weightTwo} onChange={(e) => setWeightTwo(Number(e.target.value))} />
-        </div>
-        
-        <div>
-          <label htmlFor="">Classe esperada 4</label>
-          <input type="text" value={classes.classe4} onChange={(e) => setClasses({...classes, classe4: Number(e.target.value)})} />
-        </div>
-        <div>
-          <label htmlFor="">Limite</label>
-          <input type="text" value={threshold} onChange={(e) => setThreshold(Number(e.target.value))} />
-        </div>
-        <div>
-          <label htmlFor="">Taxa de aprendizagem</label>
-          <input type="text" value={learningRate} onChange={(e) => setLearningRate(Number(e.target.value))} />
-        </div>
-        <div>
-          <label htmlFor="">Bias</label>
-          <input type="text" value={entryBias} onChange={(e) => setEntryBias(Number(e.target.value))} />
-        </div>
-        <div>
-          <label htmlFor="">Peso do bias</label>
-          <input type="text" value={weightBias} onChange={(e) => setWeightBias(Number(e.target.value))} />
-        </div>
-        <button onClick={treinar} type="button">BOTAO PRA APERTAR</button>
-      </form>
-
-
+      </div>
       {
-        isNeuronReady ? 
-        <NeuronComponent
-          states = {states}
-          entryBias = {entryBias}
-          weightBias = {weightBias}
-          threshold = {threshold}
-          learningRate = {learningRate}
-          weight_one = {weightOne}
-          weight_two = {weightTwo}
-        />
-        : <></>
+        isNeuronReady ?
+          <NeuronComponent
+            states={states}
+            entryBias={Number(entryBias)}
+            weightBias={Number(weightBias)}
+            threshold={Number(threshold)}
+            learningRate={Number(learningRate)}
+            weight_one={Number(weightOne)}
+            weight_two={Number(weightTwo)}
+          />
+          : <></>
       }
-        
-    </div>
+
+    </div >
   );
 }
 
