@@ -17,44 +17,53 @@ const App = () => {
   const [weightOne, setWeightOne] = useState("3");
   const [weightTwo, setWeightTwo] = useState("2");
 
+  const [entryOneTest, setEntryOneTest] = useState("0");
+  const [entryTwoTest, setEntryTwoTest] = useState("0");
+
+  const [isTrained, setIsTrained] = useState(false);
+
+  const [testInformations, setTestInformations] = useState<any>({ isTestReady: false });
+
+  const [testResult, setTestResult] = useState('');
+
   const [entries, setEntries] = useState({
-    entryOne: "0",
-    entryTwo: "0",
+    entryOne: "1",
+    entryTwo: "1",
     entryThree: "0",
     entryFour: "1",
     entryFive: "1",
     entrySix: "0",
-    entrySeven: "1",
-    entryEight: "1"
+    entrySeven: "0",
+    entryEight: "0"
   })
 
   const [classes, setClasses] = useState({
-    expectedClassOne: "0",
-    expectedClassTwo: "0",
+    expectedClassOne: "1",
+    expectedClassTwo: "1",
     expectedClassThree: "1",
-    expectedClassFour: "1",
+    expectedClassFour: "0",
   })
 
   const treinar = () => {
     setStates([
-      { 
-        entry_one: Number(entries.entryOne), 
-        entry_two: Number(entries.entryTwo), 
-        expected_class: Number(classes.expectedClassOne) 
+      {
+        entry_one: Number(entries.entryOne),
+        entry_two: Number(entries.entryTwo),
+        expected_class: Number(classes.expectedClassOne)
       },
       {
-        entry_one: Number(entries.entryTwo), 
-        entry_two: Number(entries.entryFour), 
+        entry_one: Number(entries.entryThree),
+        entry_two: Number(entries.entryFour),
         expected_class: Number(classes.expectedClassTwo)
       },
       {
-        entry_one: Number(entries.entryFive), 
-        entry_two: Number(entries.entrySix), 
+        entry_one: Number(entries.entryFive),
+        entry_two: Number(entries.entrySix),
         expected_class: Number(classes.expectedClassThree)
       },
       {
-        entry_one: Number(entries.entrySeven), 
-        entry_two: Number(entries.entryEight), 
+        entry_one: Number(entries.entrySeven),
+        entry_two: Number(entries.entryEight),
         expected_class: Number(classes.expectedClassFour)
       }
     ]);
@@ -62,11 +71,18 @@ const App = () => {
     setIsNeuronReady(true);
   }
 
+  const test = () => {
+    setTestResult('');
+    const output = Number(entryOneTest) * Number(testInformations.weight_one) + Number(entryTwoTest) * Number(testInformations.weight_two) + 1 * (testInformations.weightBias ? Number(testInformations.weightBias) : 1);
+    const classification = output > Number(threshold) ? 1 : 0;
+    setTestResult(classification ? '1' : '0');
+  }
+
   return (
     <div className="container">
       <div className="card mt-3">
         <div className="card-header">
-          Featured
+          <h4>Parâmetros de entrada</h4>
         </div>
         <div className="card-body">
           <div className="row">
@@ -174,6 +190,50 @@ const App = () => {
       </div>
       {
         isNeuronReady ?
+          <>
+            <div className="card mt-3">
+              <div className="card-header">
+                <h4>Parâmetros de teste</h4>
+              </div>
+              <div className="card-body">
+                <div className="row">
+                  <div className="col-3">
+                    <h4>Entradas</h4>
+                    <div className="row">
+                      <div className="mb-3 col-4">
+                        <label className="form-label">x1</label>
+                        <input type="text" pattern="[+-]?([0-9]*[.])?[0-9]+" value={entryOneTest} onChange={(e) => setEntryOneTest(e.target.value)} className="form-control" />
+                      </div>
+                      <div className="mb-3 col-4">
+                        <label className="form-label">x2</label>
+                        <input type="text" value={entryTwoTest} onChange={(e) => setEntryTwoTest(e.target.value)} className="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {
+                  testInformations.isTestReady ?
+                    <>
+                      <div className="mb-3 col-2">
+                        <h4 className="form-label"> Classificação </h4>
+                        <input type="text" readOnly value={testResult} className="form-control" />
+                      </div>
+                    </>
+                    : <></>
+                }
+                <div className="col-12 text-center mt-4">
+                  <button onClick={test} className="btn btn-primary" type="button">Testar</button>
+                </div>
+              </div>
+            </div>
+          </>
+          :
+          <></>
+      }
+
+      {
+        isNeuronReady ?
           <NeuronComponent
             states={states}
             entryBias={Number(entryBias)}
@@ -182,6 +242,7 @@ const App = () => {
             learningRate={Number(learningRate)}
             weight_one={Number(weightOne)}
             weight_two={Number(weightTwo)}
+            onFinish={setTestInformations}
           />
           : <></>
       }

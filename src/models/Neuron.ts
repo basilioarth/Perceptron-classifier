@@ -29,11 +29,6 @@ export class Neuron {
         this.weight_two = weight_two;
     }
 
-    public test(state: State) {
-        const output = state.entry_one * this.weight_one + state.entry_two * this.weight_two + this.entry_bias * (this.weight_bias ? this.weight_bias : 1);
-        return output > this.threshold ? 1 : 0;
-    }
-
     public train() {
         if(this.epochs.length === 0) {
             this.training();
@@ -44,16 +39,17 @@ export class Neuron {
     }
 
     private training(){
-        
-        for (let index = this.states.length - 1; index >= this.states.length - 4; index--) {
-            this.weighting(this.states[index])
-            this.handleWeighting(index);
-        }
+        console.log(this.states)
+        this.states.map((value, index) => {
+                console.log(value)
+                this.weighting(value)
+                this.handleWeighting(index);
+            })
 
         this.createEpoch();
     }
 
-    private weighting(state: State) {        
+    private weighting(state: State) {     
         const output = state.entry_one * this.weight_one + state.entry_two * this.weight_two + this.entry_bias * (this.weight_bias ? this.weight_bias : 1);
         const classification = output > this.threshold ? 1 : 0;
 
