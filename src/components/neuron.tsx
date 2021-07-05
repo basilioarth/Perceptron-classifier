@@ -33,7 +33,6 @@ export default function NeuronComponent({ states, entryBias, weightBias, thresho
             isTestReady: true
         })
 
-        console.log(neuron.getEpochs())
     }, []);
 
     return (
