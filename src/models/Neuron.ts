@@ -39,14 +39,12 @@ export class Neuron {
     }
 
     private training(){
-        console.log(this.states)
         this.states.map((value, index) => {
-                console.log(value)
                 this.weighting(value)
                 this.handleWeighting(index);
             })
 
-        this.createEpoch();
+        this.createEpoch(this.states);
     }
 
     private weighting(state: State) {     
@@ -75,12 +73,16 @@ export class Neuron {
         return this.epochs;
     }
 
-    private createEpoch() {
-        const epoch = new Epoch(this.states);
-        this.epochs.push(epoch);
+    private createEpoch(states: State[]) {
+        const newArr: State[] = [];
+        for(let state of states){
+            let s = Object.assign({},state)
+            newArr.push(s);
+        }
+        this.epochs.push(new Epoch(newArr));
     }
 
     private isNeuronReady(): boolean {
-        return this.epochs[0].isNeuronReady();
+        return this.epochs[this.epochs.length - 1].isNeuronReady();
     }
 }

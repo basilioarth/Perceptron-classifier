@@ -121,7 +121,7 @@ const App = () => {
               </div>
             </div>
             <div className="col-3">
-              <h4>Terceiro entrada</h4>
+              <h4>Terceira entrada</h4>
               <div className="row">
                 <div className="mb-3 col-3">
                   <label className="form-label">x1</label>
@@ -190,6 +190,21 @@ const App = () => {
       </div>
       {
         isNeuronReady ?
+          <NeuronComponent
+            states={states}
+            entryBias={Number(entryBias)}
+            weightBias={Number(weightBias)}
+            threshold={Number(threshold)}
+            learningRate={Number(learningRate)}
+            weight_one={Number(weightOne)}
+            weight_two={Number(weightTwo)}
+            onFinish={setTestInformations}
+          />
+          : <></>
+      }
+
+{
+        isNeuronReady ?
           <>
             <div className="card mt-3">
               <div className="card-header">
@@ -231,22 +246,6 @@ const App = () => {
           :
           <></>
       }
-
-      {
-        isNeuronReady ?
-          <NeuronComponent
-            states={states}
-            entryBias={Number(entryBias)}
-            weightBias={Number(weightBias)}
-            threshold={Number(threshold)}
-            learningRate={Number(learningRate)}
-            weight_one={Number(weightOne)}
-            weight_two={Number(weightTwo)}
-            onFinish={setTestInformations}
-          />
-          : <></>
-      }
-
     </div >
   );
 }

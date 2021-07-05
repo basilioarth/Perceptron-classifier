@@ -12,6 +12,7 @@ export class Epoch {
     }
 
     public isNeuronReady(): boolean {
+        debugger
         for (const state of this.states) {
             if(state.classification !== state.expected_class) {
                 return false;
